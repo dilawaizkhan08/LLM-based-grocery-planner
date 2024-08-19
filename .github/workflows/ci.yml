@@ -22,10 +22,10 @@ jobs:
           buildkitd-flags: |
             --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
           buildkitd-config-inline: |
-            [registry."100.25.165.10:6000"]
+            [registry."129.168.2.17:6000"]
               http = true
               insecure = true
-            [registry."54.197.39.98:6000"]
+            [registry."129.168.2.17:6000"]
               http = true
               insecure = true
 
@@ -39,24 +39,6 @@ jobs:
         run: |
           pip install black
           black main.py app.py
-
-      # - name: Run tests with pytest
-      #   run: |
-      #     pip install -r requirements.txt
-      #     pytest tests/ --maxfail=5 --disable-warnings --junitxml=results.xml || true
-          
-      # - name: Upload test results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: test-results
-      #     path: results.xml
-
-      # - name: Report test results
-      #   uses: dorny/test-reporter@v1
-      #   with:
-      #     name: Test Results
-      #     path: results.xml
-      #     reporter: pytest
 
       - name: Build Docker image
         run: |
@@ -84,7 +66,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Deploying to deployment server..."
-            cd ~/EKHO/deployment/ekho-backend
+            cd ~/dilawaiz/grocery_planner
             docker-compose down
             docker-compose pull
             docker-compose up -d
