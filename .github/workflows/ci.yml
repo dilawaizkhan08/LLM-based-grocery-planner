@@ -25,9 +25,6 @@ jobs:
             [registry."129.168.2.17:6000"]
               http = true
               insecure = true
-            [registry."129.168.2.17:6000"]
-              http = true
-              insecure = true
 
       - name: Install dependencies
         run: |
@@ -70,4 +67,3 @@ jobs:
             docker-compose down
             docker-compose pull
             docker-compose up -d
-
