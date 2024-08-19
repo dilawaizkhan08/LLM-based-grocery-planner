@@ -27,10 +27,10 @@ jobs:
         pip install -r requirements.txt
         pip install streamlit
 
-    - name: Lint with flake8
+    - name: Format with black
       run: |
-        pip install flake8
-        flake8 main.py app.py
+        pip install black
+        black main.py app.py
 
     - name: Run Streamlit App
       run: |
@@ -43,4 +43,3 @@ jobs:
     - name: Deploy to Production
       if: github.ref == 'refs/heads/main'
       run: echo "Deploying the app..." # Replace with actual deployment commands if necessary
-
