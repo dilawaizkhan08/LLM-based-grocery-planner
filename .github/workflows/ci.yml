@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # You can change this to the Python version you are using
+        python-version: '3.9'  
 
     - name: Install dependencies
       run: |
@@ -31,6 +31,29 @@ jobs:
       run: |
         pip install black
         black main.py app.py
+
+    - name: Build Docker image
+      run: |
+        docker build -t my-streamlit-app:latest .
+    
+    - name: Tag Docker image
+      run: |
+        IMAGE_TAG=latest-$(date +%Y%m%d%H%M%S)
+        docker tag my-streamlit-app:latest dilawaizkhan/my-streamlit-app:${IMAGE_TAG}
+      env:
+        IMAGE_TAG: latest-$(date +%Y%m%d%H%M%S)
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push dilawaizkhan/my-streamlit-app:${IMAGE_TAG}
+      env:
+        IMAGE_TAG: latest-$(date +%Y%m%d%H%M%S)
 
     - name: Run Streamlit App
       run: |
