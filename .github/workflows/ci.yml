@@ -22,7 +22,7 @@ jobs:
           buildkitd-flags: |
             --allow-insecure-entitlement security.insecure --allow-insecure-entitlement network.host
           buildkitd-config-inline: |
-            [registry."129.168.2.17:6000"]
+            [registry."129.168.2.30:6000"]
               http = true
               insecure = true
 
@@ -63,7 +63,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Deploying to deployment server..."
-            cd ~/dilawaiz/grocery_planner
+            cd ~/dilawaiz
             docker-compose down
             docker-compose pull
             docker-compose up -d
