@@ -55,16 +55,21 @@ jobs:
         run: |
           docker push dilawaizkhan/my-streamlit-app:latest
 
+      **# Added step to check SSH connection**
+      - name: Check SSH connection
+        run: nc -zv ${{ secrets.SSH_HOST }} 22
+
       - name: SSH to remote main server and deploy
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          **# Removed password and added key for SSH key authentication**
+          key: ${{ secrets.SSH_KEY }} 
           script: |
             echo "Deploying to deployment server..."
-            cd ~/dilawaiz
             docker-compose down
             docker-compose pull
             docker-compose up -d
           timeout: 600s
+
