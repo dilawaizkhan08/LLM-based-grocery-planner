@@ -19,16 +19,28 @@ jobs:
           pip install -r requirements.txt
           pip install streamlit
 
+      - name: Build and push Docker image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            203.128.11.19:6000/my-streamlit-app:${{ github.sha }}
+            203.128.11.19:6000/my-streamlit-app:latest
+
+      - name: Check SSH connection
+        run: nc -zv 203.128.11.19 22
+
       - name: SSH to remote server and deploy
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Deploying to deployment server..."
-            cd ~/EKHO/deployment/ekho-backend
             docker-compose down
             docker-compose pull
             docker-compose up -d
           debug: true
+
