@@ -32,9 +32,8 @@ jobs:
           context: .
           push: true
           tags: |
-            203.128.11.19:6000/my-streamlit-app:${{ github.sha }}
-            203.128.11.19:6000/my-streamlit-app:latest
-          registry: 203.128.11.19:6000
+            YOUR_REGISTRY_IP:6000/my-streamlit-app:${{ github.sha }}
+            YOUR_REGISTRY_IP:6000/my-streamlit-app:latest
 
       - name: Check SSH connection
         run: nc -zv 203.128.11.19 22
@@ -47,7 +46,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Deploying to deployment server..."
-            cd ~/EKHO/deployment/ekho-backend
             docker-compose down
             docker-compose pull
             docker-compose up -d
