@@ -55,15 +55,12 @@ jobs:
         run: |
           docker push dilawaizkhan/my-streamlit-app:latest
 
-      - name: Check SSH connection
-        run: nc -zv ${{ secrets.SSH_HOST }} 22
-
       - name: SSH to remote main server and deploy
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }} 
+          password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Deploying to deployment server..."
             docker-compose down
