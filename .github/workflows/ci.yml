@@ -55,7 +55,6 @@ jobs:
         run: |
           docker push dilawaizkhan/my-streamlit-app:latest
 
-      **# Added step to check SSH connection**
       - name: Check SSH connection
         run: nc -zv ${{ secrets.SSH_HOST }} 22
 
@@ -64,7 +63,6 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          **# Removed password and added key for SSH key authentication**
           key: ${{ secrets.SSH_KEY }} 
           script: |
             echo "Deploying to deployment server..."
@@ -72,4 +70,3 @@ jobs:
             docker-compose pull
             docker-compose up -d
           timeout: 600s
-
