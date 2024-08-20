@@ -32,8 +32,8 @@ jobs:
           context: .
           push: true
           tags: |
-            YOUR_REGISTRY_IP:6000/my-streamlit-app:${{ github.sha }}
-            YOUR_REGISTRY_IP:6000/my-streamlit-app:latest
+            203.128.11.19:6000/my-streamlit-app:${{ github.sha }}
+            203.128.11.19:6000/my-streamlit-app:latest
 
       - name: Check SSH connection
         run: nc -zv 203.128.11.19 22
